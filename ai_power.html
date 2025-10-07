@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>如何提升你的AI力</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .quote {
+            font-style: italic;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+        }
+
+        .nav {
+            display: flex;
+            overflow-x: auto;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .nav-item {
+            padding: 15px 25px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: #e9ecef;
+        }
+
+        .nav-item.active {
+            background: white;
+            border-bottom-color: #667eea;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin: 30px 0 15px 0;
+        }
+
+        h4 {
+            color: #555;
+            font-size: 1.2em;
+            margin: 20px 0 10px 0;
+        }
+
+        p, li {
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        ul {
+            margin-left: 30px;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .card {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border: 1px solid #e9ecef;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .dimension-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .dimension-card {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+
+        .dimension-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .dimension-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .tool-tag {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            margin: 5px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .blockquote {
+            border-left: 5px solid #667eea;
+            padding: 15px 20px;
+            margin: 20px 0;
+            background: #f8f9fa;
+            font-style: italic;
+            color: #555;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s;
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            .content {
+                padding: 20px;
+            }
+            .dimension-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>如何提升你的AI力？</h1>
+            <div class="quote">
+                <p>你可曾想过：将来有一天，AI可能帮你写讲章、备课、设计课程、甚至做牧养辅导。</p>
+                <p>而当AI可以"生成一篇优质讲章"时，牧者与神学生的独特价值，还在哪里？</p>
+                <p><strong>今天我们不是来学习"怎么用AI"，而是学习"如何不被AI用"。</strong></p>
+            </div>
+        </div>
+
+        <div class="nav" id="nav">
+            <div class="nav-item active" onclick="showSection(0)">引言</div>
+            <div class="nav-item" onclick="showSection(1)">机遇与挑战</div>
+            <div class="nav-item" onclick="showSection(2)">圣经视角</div>
+            <div class="nav-item" onclick="showSection(3)">灵魂主权</div>
+            <div class="nav-item" onclick="showSection(4)">什么是AI力</div>
+            <div class="nav-item" onclick="showSection(5)">如何提升</div>
+            <div class="nav-item" onclick="showSection(6)">使用场景</div>
+        </div>
+
+        <div class="content">
+            <!-- Section 0: 引言 -->
+            <div class="section active">
+                <h2>核心理念</h2>
+                <div class="card">
+                    <h3>让AI去做不该我们去做的事</h3>
+                    <p>将重复性、机械性的工作交给AI，释放我们的时间和精力。</p>
+                </div>
+                <div class="card">
+                    <h3>不让AI去做我们自己应该去做的事</h3>
+                    <p>保持那些需要人类独特价值——意识、情感、判断、创造——的工作。</p>
+                </div>
+            </div>
+
+            <!-- Section 1: 机遇与挑战 -->
+            <div class="section">
+                <h2>AI时代的机遇与挑战</h2>
+                <div class="card">
+                    <h3>🌍 全面重塑</h3>
+                    <p>教育、研究、牧养都在被AI重塑</p>
+                </div>
+                <div class="card">
+                    <h3>🔍 放大效应</h3>
+                    <p>AI不是"取代人"，而是<span class="highlight">放大人</span>——包括人的智慧，也包括人的盲点。</p>
+                </div>
+            </div>
+
+            <!-- Section 2: 圣经视角 -->
+            <div class="section">
+                <h2>圣经视角下的AI</h2>
+                <div class="card">
+                    <h3>✅ 拥抱：创造的延伸</h3>
+                    <p><strong>创世记 1:26</strong> - 神说："我们要照着我们的形像、按着我们的样式造人，使他们管理..."</p>
+                    <p>AI是人类创造力的延伸，是神赋予我们治理能力的体现。</p>
+                </div>
+                <div class="card">
+                    <h3>⚠️ 警醒：巴别塔的再现</h3>
+                    <p><strong>创世记 11章</strong> - 巴别塔的故事提醒我们技术的傲慢与危险。</p>
+                    <p>我们需要保持谦卑，认识到技术的局限和潜在的误用。</p>
+                </div>
+            </div>
+
+            <!-- Section 3: 灵魂主权 -->
+            <div class="section">
+                <h2>保持灵魂的"主权"</h2>
+                <p style="font-size: 1.1em; color: #555; margin-bottom: 30px;">AI放大人类的欲望，也暴露内在的空虚</p>
+                
+                <h3>🧑 身份：我是谁？</h3>
+                <div class="card">
+                    <h4>作为一个人</h4>
+                    <p>我们有意识，有情感，有价值观，有选择的自由。我们会因为一首歌感动，会为了一个理想冒险，会在无数个微小的决策中体现自己的个性和风格。</p>
+                    <p><strong>这些东西，AI学不会，也不需要学会。</strong></p>
+                </div>
+                
+                <div class="card">
+                    <h4>作为一个牧者</h4>
+                    <p>我要成为怎样的人？我要与神建立怎样的关系？</p>
+                    <div class="blockquote">
+                        <p>✝️ AI可以写出完美的祷告词，但只有圣灵才能教我们真正地祷告。</p>
+                        <p>✝️ AI可以写出完美的讲章，但只有住在基督里的生命才能释放神话语的大能。</p>
+                        <p>✝️ AI可以提供非常有情绪价值的对话，但只有在爱里真实的生命陪伴才能带出生命的影响力。</p>
+                    </div>
+                </div>
+
+                <h3>🎯 使命：神呼召我去做什么？</h3>
+                <div class="card">
+                    <h4>核心能力</h4>
+                    <ul>
+                        <li><strong>洞察力：</strong>能够从海量信息中提取有价值的见解</li>
+                        <li><strong>思考力：</strong>批判性思维和系统性思维</li>
+                        <li><strong>创造力：</strong>能够产生独特的想法和解决方案</li>
+                        <li><strong>判断力：</strong>价值和使命判断，能够在复杂情况下做出正确选择</li>
+                        <li><strong>连接力：</strong>能够建立有意义的人际关系</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>💭 反思问题</h4>
+                    <p>❓ 我使用AI节省的时间去做了什么？（是否在促进使命的完成？）</p>
+                    <p>❓ 我使用AI去做这件事，使我错过了什么神要我学习和经历的？（神对我们当下生命的塑造是什么？）</p>
+                </div>
+            </div>
+
+            <!-- Section 4: 什么是AI力 -->
+            <div class="section">
+                <h2>什么是AI力？</h2>
+                
+                <h3>AI力的五个维度模型</h3>
+                <div class="dimension-grid">
+                    <div class="dimension-card">
+                        <div class="dimension-number">1</div>
+                        <h4>理解力</h4>
+                        <p>认识AI的原理、潜能与局限</p>
+                        
+                    </div>
+                    <div class="dimension-card">
+                        <div class="dimension-number">2</div>
+                        <h4>应用力</h4>
+                        <p>善用AI提升学习与创造</p>
+                        
+                    </div>
+                    <div class="dimension-card">
+                        <div class="dimension-number">3</div>
+                        <h4>辨识力</h4>
+                        <p>批判性地评估AI输出</p>
+                       
+                    </div>
+                    <div class="dimension-card">
+                        <div class="dimension-number">4</div>
+                        <h4>整合力</h4>
+                        <p>将AI融入神学学习与事奉</p>
+                       
+                    </div>
+                    <div class="dimension-card">
+                        <div class="dimension-number">5</div>
+                        <h4>使命力</h4>
+                        <p>以AI服务上帝国度与人</p>
+                       
+                    </div>
+                </div>
+
+                <div class="card">
+                    <p style="font-size: 1.1em;">当我们具备这五个维度的整合能力，就不只是一个"AI的使用者"，而是一个<span class="highlight">"AI时代的辨识者与塑造者"</span>。</p>
+                    <p style="font-size: 1.1em; margin-top: 15px;">AI力不是在谈论技术和工具，而是指<span class="highlight">"智慧在新媒介中的延伸"</span>。</p>
+                </div>
+            </div>
+
+            <!-- Section 5: 如何提升 -->
+            <div class="section">
+                <h2>如何实际提升AI力？</h2>
+                
+                <h3>💡 理念层</h3>
+                <div class="card">
+                    <p style="font-size: 1.1em;"><span class="highlight">AI时代智能正在变得普及而且廉价，而智慧变得更加珍贵。</span></p>
+                    <p>什么是智慧？就是知道什么时候该用什么，知道什么是真正重要的，知道如何在复杂的情况下做出正确的选择。</p>
+                </div>
+
+                <div class="card">
+                    <h4>核心原则</h4>
+                    <ul>
+                        <li><strong>先干再说：</strong>先进行实际操作，而不是一开始就陷入繁杂的理论</li>
+                        <li><strong>AI First：</strong>将AI作为强大的学习和工作伙伴</li>
+                        <li><strong>持续学习：</strong>保持学习的态度和开放的心态</li>
+                        <li><strong>与AI协同：</strong>对话、创造、判断、选择、体验、更新的循环</li>
+                    </ul>
+                    <p style="margin-top: 15px; color: #667eea; font-weight: bold;">最终目标是在AI帮助下"活得更像人"</p>
+                </div>
+
+                <h3>🧠 思维层</h3>
+                <div class="card">
+                    <ul>
+                        <li>从"问答案" → <span class="highlight">"问更好的问题"</span></li>
+                        <li>用AI生成多角度思考，避免单一视野</li>
+                        <li>Read in，Prompt out（金字塔、SWOT、黄金圈、MAP）</li>
+                        <li><strong>我是专家，AI是助手</strong>，学会与AI共创（助手会出错，专家做决策）</li>
+                    </ul>
+                </div>
+
+                <h3>🛠️ 技术层</h3>
+                
+                <h4>工具类别</h4>
+                <div class="card">
+                    <p><strong>大模型：</strong></p>
+                    <span class="tool-tag">ChatGPT</span>
+                    <span class="tool-tag">Gemini</span>
+                    <span class="tool-tag">Claude</span>
+                    <span class="tool-tag">豆包</span>
+                    <span class="tool-tag">通义千问</span>
+                </div>
+
+                <div class="card">
+                    <p><strong>知识库：</strong></p>
+                    <span class="tool-tag">Perplexity</span>
+                    <span class="tool-tag">Notebooklm</span>
+                    <span class="tool-tag">IMA copilot</span>
+                    <span class="tool-tag">Zotero</span>
+                    <span class="tool-tag">Cherry studio</span>
+                </div>
+
+                <div class="card">
+                    <p><strong>智能体：</strong></p>
+                    <span class="tool-tag">扣子</span>
+                    <span class="tool-tag">Manus</span>
+                    <span class="tool-tag">Genspark</span>
+                </div>
+
+                <div class="card">
+                    <p><strong>数据处理：</strong></p>
+                    <span class="tool-tag">Trae</span>
+                    <span class="tool-tag">Cursor</span>
+                    <span class="tool-tag">Codex</span>
+                </div>
+
+                <div class="card">
+                    <p><strong>知识体系：</strong></p>
+                    <span class="tool-tag">Obsidian</span>
+                    <span class="tool-tag">Notion</span>
+                    <span class="tool-tag">Dessix</span>
+                </div>
+
+                <h4>提示词（Prompt）技巧</h4>
+                <div class="card">
+                    <p>"提示词"（Prompt）是一种指令或信息，它引导或触发AI系统做出回应。</p>
+                    <p><strong>学会写提示词，不仅是"技术技巧"，更是一种思维方式。</strong></p>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>元素</th>
+                            <th>作用</th>
+                            <th>示例</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>角色</strong></td>
+                            <td>告诉AI要"以谁的视角"回应</td>
+                            <td>"你是一位神学院教授…" / "你是一位牧者…"</td>
+                        </tr>
+                        <tr>
+                            <td><strong>任务</strong></td>
+                            <td>告诉AI要做什么</td>
+                            <td>"请为我讲解罗马书5章的结构" / "帮我写一篇课程讲义"</td>
+                        </tr>
+                        <tr>
+                            <td><strong>语气/格式</strong></td>
+                            <td>告诉AI要怎么表达</td>
+                            <td>"语气温和、有洞察力，适合神学生听众" / "以表格方式呈现"</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="blockquote">
+                    <strong>示例：</strong><br>
+                    "你是一位神学院教授，请用温和且具神学深度的口吻，为神学生解释'AI如何影响神学教育'，用三点结构。"
+                </div>
+
+                <h4>CLEAR框架</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>技巧</th>
+                            <th>含义</th>
+                            <th>实例</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>C – Context（上下文）</strong></td>
+                            <td>提供背景或用途</td>
+                            <td>"这是一个有关牧养的1小时讲座。"</td>
+                        </tr>
+                        <tr>
+                            <td><strong>L – Limit（限制）</strong></td>
+                            <td>给出范围</td>
+                            <td>"限300字，用三个要点表达。"</td>
+                        </tr>
+                        <tr>
+                            <td><strong>E – Example（例子）</strong></td>
+                            <td>提供示范</td>
+                            <td>"参考提摩太凯勒的风格。"</td>
+                        </tr>
+                        <tr>
+                            <td><strong>A – Audience（听众）</strong></td>
+                            <td>指明对象</td>
+                            <td>"听众是教会小组长。"</td>
+                        </tr>
+                        <tr>
+                            <td><strong>R – Result（结果）</strong></td>
+                            <td>说明希望得到什么</td>
+                            <td>"请输出成PPT大纲格式。"</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>工作流（Workflow）</h4>
+                <div class="card">
+                    <p><strong>工作流</strong>是指一项任务或目标从开始到完成所经过的一系列步骤、顺序与交互方式。</p>
+                    <ul>
+                        <li>事情怎么开始？（触发）</li>
+                        <li>要经过哪些步骤？（过程）</li>
+                        <li>如何产生结果？（输出）</li>
+                    </ul>
+                    <p style="margin-top: 15px; font-weight: bold;">AI不是取代你的工作，而是嵌入你的工作流中，成为智能节点。</p>
+                </div>
+            </div>
+
+            <!-- Section 6: 使用场景 -->
+            <div class="section">
+                <h2>牧养处境下的使用场景</h2>
+                
+                <h3>🎤 思考教练</h3>
+                <div class="card">
+                    <p><strong>工具：</strong></p>
+                    <span class="tool-tag">ChatGPT语音</span>
+                    <span class="tool-tag">豆包语音</span>
+                    <p style="margin-top: 15px;">通过语音对话，与AI进行深度思考和反思。</p>
+                </div>
+
+                <h3>🎨 设计工具</h3>
+                <div class="card">
+                    <ul>
+                        <li><strong>提交作业系统：</strong>Gemini Canvas</li>
+                        <li><strong>圣经游戏：</strong>Codex CLI</li>
+                        <li><strong>祷告卡片生成：</strong>Claude</li>
+                        <li><strong>教会系统观察者：</strong>Claude</li>
+                        <li><strong>PPT插图：</strong>Napkin</li>
+                        <li><strong>儿童主日学绘本：</strong>Gemini Story board</li>
+                    </ul>
+                </div>
+
+                <h3>📚 学习助手</h3>
+                <div class="card">
+                    <h4>教练式领导力</h4>
+                    <span class="tool-tag">Perplexity</span>
+                    <span class="tool-tag">Notebooklm</span>
+                    <span class="tool-tag">Cursor</span>
+                    <span class="tool-tag">Obsidian</span>
+                    <p style="margin-top: 15px;">从文献检索到知识整合，再到体系构建的完整学习链。</p>
+                </div>
+
+                <h3>✍️ 创作伙伴</h3>
+                <div class="card">
+                    <h4>神学圆桌会议</h4>
+                    <span class="tool-tag">ChatGPT</span>
+                    <span class="tool-tag">Perplexity</span>
+                    <span class="tool-tag">Notebooklm</span>
+                    <span class="tool-tag">Dessix</span>
+                    <p style="margin-top: 15px;">从神学思考、文献检索、知识整合到研究输出的完整创作流程。</p>
+                </div>
+
+                <h3>🌟 结语</h3>
+                <div class="card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none;">
+                    <p style="font-size: 1.2em; line-height: 2; color: white;">
+                        提升AI力，不是为了成为更聪明、更有效率的人，而是为了在这个时代成为<strong>更有思想、更有分辨力、更有智慧、更有创造性的牧者</strong>，为要完成神给我们的托付与使命。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const sections = document.querySelectorAll('.section');
+        const navItems = document.querySelectorAll('.nav-item');
+        const progressBar = document.getElementById('progressBar');
+
+        function showSection(index) {
+            sections.forEach((section, i) => {
+                section.classList.toggle('active', i === index);
+            });
+            
+            navItems.forEach((item, i) => {
+                item.classList.toggle('active', i === index);
+            });
+
+            const progress = ((index + 1) / sections.length) * 100;
+            progressBar.style.width = progress + '%';
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            progressBar.style.width = (1 / sections.length) * 100 + '%';
+        });
+    </script>
+</body>
+</html>
